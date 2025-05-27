@@ -15,6 +15,12 @@ Este proyecto es un recomendador de música que utiliza la API de Spotify para s
 │   ├── Cancion.py               # Clase Cancion que representa una canción con título, artista, género y URL de preview.
 │   ├── Recomendador.py          # Clase RecomendadorSpotify que maneja la lógica para recomendar canciones a usuarios.
 │   └── Usuario.py               # Clase Usuario que representa un usuario con nombre y géneros favoritos.
+├── test/                       # Carpeta con pruebas unitarias para funciones y clases del proyecto.
+│   ├── __init__.py
+│   ├── test_helpers.py
+│   ├── test_SpotifyClientWrapper.py
+│   └── test_models.py
+├── run.py                      # Script para ejecutar pruebas antes de correr el programa principal.
 ├── .gitignore                   # Archivos y carpetas ignorados por git.
 ├── README.md                    # Este archivo de documentación.
 ```
@@ -24,7 +30,8 @@ Este proyecto es un recomendador de música que utiliza la API de Spotify para s
 - **spotipy**: Librería oficial para interactuar con la API de Spotify.
 - **python-dotenv**: Para cargar variables de entorno desde un archivo `.env` (donde se almacenan las credenciales de Spotify).
 - **asyncio**: Para manejar llamadas asíncronas y concurrencia en la obtención de canciones.
-  
+- **unittest**: Framework de pruebas unitarias incluido en Python.
+
 Estas dependencias permiten una integración eficiente con Spotify y un manejo asíncrono de las solicitudes para mejorar el rendimiento.
 
 ## Cómo obtener el Client ID y Client Secret de Spotify
@@ -47,6 +54,28 @@ Reemplaza `tu_client_id_aqui` y `tu_client_secret_aqui` con los valores obtenido
 El archivo `main.py` contiene un ejemplo de cómo usar el recomendador:
 
 ```python
+import asyncio
+import os
+from dotenv import load_dotenv
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyClientCredentials
+
+from models.Usuario import Usuario
+from models.Recomendador import RecomendadorSpotify
+from SpotifyClientWrapper import SpotifyClientWrapper
+from helpers import obtener_canciones_para_todos
+
+# Cargar credenciales
+load_dotenv()
+
+sp = Spotify(auth_manager=SpotifyClientCredentials(
+    client_id=os.getenv("SPOTIFY_CLIENT_ID"),
+    client_secret=os.getenv("SPOTIFY_CLIENT_SECRET")
+))
+
+spotify_wrapper = SpotifyClientWrapper(sp)
+recomendador = RecomendadorSpotify(spotify_wrapper)
+
 usuarios = [
     Usuario("Ana", ["k-pop", "pop"]),
     Usuario("Luis", ["latin", "rap"]),
@@ -54,10 +83,26 @@ usuarios = [
 ]
 
 resultados = asyncio.run(obtener_canciones_para_todos(usuarios, recomendador))
+
+for usuario, canciones in zip(usuarios, resultados):
+    print(f"\n🎧 Recomendaciones para {usuario.nombre}:")
+    for cancion in canciones:
+        print(f" - {cancion.titulo} de {cancion.artista}")
 ```
 
-Este script crea usuarios con géneros favoritos, obtiene recomendaciones para cada uno.
+## Ejecución con pruebas automáticas
+
+Para ejecutar las pruebas unitarias antes de correr el programa principal, usa el script `run.py`:
+
+```
+python run.py
+```
+
+Si las pruebas pasan, el programa principal se ejecutará; si alguna prueba falla, la ejecución se detendrá.
 
 ---
 
-Con esta documentación, cualquier desarrollador podrá entender la estructura del proyecto, instalar las dependencias necesarias, configurar las credenciales de Spotify y ejecutar el recomendador de música.
+## Integrantes del equipo.
+- 21100175 Javier Armando Carranza García
+- 21100183 Alejandro Azael Cortina Rangel
+- 21100194 Oscar David Espinoza Gomez
