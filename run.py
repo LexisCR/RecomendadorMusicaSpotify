@@ -17,4 +17,4 @@ if __name__ == "__main__":
         print("Una o varias prueban contienen errores. El archivo main no se ejecutará.")
         sys.exit(1)
     print("Todas las pruebas se han pasado. El archivo main se ejecutara...\n")
-    subprocess.run([sys.executable, "main.py"])
+    subprocess.run([sys.executable, "api.py"])
