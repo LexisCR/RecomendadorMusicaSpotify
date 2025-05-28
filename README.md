@@ -31,6 +31,8 @@ Este proyecto es un recomendador de música que utiliza la API de Spotify para s
 - **python-dotenv**: Para cargar variables de entorno desde un archivo `.env` (donde se almacenan las credenciales de Spotify).
 - **asyncio**: Para manejar llamadas asíncronas y concurrencia en la obtención de canciones.
 - **unittest**: Framework de pruebas unitarias incluido en Python.
+- **pydantic**: Para la validación de datos, asegurando que los modelos de entrada y salida sean correctos según los esquemas definidos.
+- **fastapi**: Framework web moderno para crear APIs de alta performance, especialmente diseñado para trabajar con operaciones asíncronas.
 
 Estas dependencias permiten una integración eficiente con Spotify y un manejo asíncrono de las solicitudes para mejorar el rendimiento.
 
