@@ -17,12 +17,14 @@ class TestSpotifyClientWrapper(unittest.TestCase):
                     {
                         'name': 'Song1',
                         'artists': [{'name': 'Artist1'}],
-                        'preview_url': 'url1'
+                        'preview_url': 'url1',
+                        'external_urls': {'spotify': 'urls1'}
                     },
                     {
                         'name': 'Song2',
                         'artists': [{'name': 'Artist2'}],
-                        'preview_url': 'url2'
+                        'preview_url': 'url2',
+                        'external_urls': {'spotify': 'urls2'}
                     }
                 ]
             }
@@ -34,6 +36,7 @@ class TestSpotifyClientWrapper(unittest.TestCase):
         self.assertEqual(canciones[0].artista, 'Artist1')
         self.assertEqual(canciones[0].genero, 'pop')
         self.assertEqual(canciones[0].url_preview, 'url1')
+        self.assertEqual(canciones[0].url_spotify, 'urls1')
 
     def test_obtener_canciones_por_genero(self):
         async def run_test():

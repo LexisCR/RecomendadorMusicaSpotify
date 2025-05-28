@@ -6,9 +6,9 @@ class TestHelpers(unittest.TestCase):
 
     def setUp(self):
         self.canciones = [
-            Cancion("Cancion1", "Artista1", "pop", "url1"),
-            Cancion("Cancion2", "Artista2", "rock", "url2"),
-            Cancion("Cancion3", "Artista3", "pop", "url3"),
+            Cancion("Cancion1", "Artista1", "pop", "url1", "urls1"),
+            Cancion("Cancion2", "Artista2", "rock", "url2", "urls2"),
+            Cancion("Cancion3", "Artista3", "pop", "url3", "urls3"),
         ]
         self.canciones[0].popularidad = 50
         self.canciones[1].popularidad = 30

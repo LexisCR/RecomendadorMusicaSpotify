@@ -12,9 +12,38 @@ from models.Recomendador import RecomendadorSpotify
 from SpotifyClientWrapper import SpotifyClientWrapper
 from helpers import obtener_canciones_para_todos
 
+from fastapi.middleware.cors import CORSMiddleware
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+from typing import Optional
+
 load_dotenv()
 
 app = FastAPI()
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://127.0.0.1",
+    "http://127.0.0.1:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+async def root():
+    return FileResponse("static/index.html")
 
 sp = Spotify(auth_manager=SpotifyClientCredentials(
     client_id=os.getenv("SPOTIFY_CLIENT_ID"),
@@ -32,7 +61,8 @@ class CancionResponse(BaseModel):
     titulo: str
     artista: str
     genero: str
-    url_preview: str = None
+    url_preview: Optional[str] = None
+    url_spotify: str
 
 @app.post("/recomendar", response_model=List[CancionResponse])
 async def recomendar(user: UserRequest):
@@ -46,6 +76,7 @@ async def recomendar(user: UserRequest):
             titulo=c.titulo,
             artista=c.artista,
             genero=c.genero,
-            url_preview=c.url_preview
+            url_preview=c.url_preview,
+            url_spotify=c.url_spotify
         ) for c in canciones
     ]

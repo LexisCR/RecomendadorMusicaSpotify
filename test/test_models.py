@@ -11,16 +11,17 @@ class DummySpotifyClientWrapper:
 
     async def obtener_canciones_por_genero(self, genero):
         self.called_with.append(genero)
-        return [Cancion(f"Song_{genero}", f"Artist_{genero}", genero, f"url_{genero}")]
+        return [Cancion(f"Song_{genero}", f"Artist_{genero}", genero, f"url_{genero}", f"urls_{genero}")]
 
 class TestModels(unittest.TestCase):
 
     def test_cancion_attributes(self):
-        c = Cancion("title", "artist", "genre", "url")
+        c = Cancion("title", "artist", "genre", "url", "urls")
         self.assertEqual(c.titulo, "title")
         self.assertEqual(c.artista, "artist")
         self.assertEqual(c.genero, "genre")
         self.assertEqual(c.url_preview, "url")
+        self.assertEqual(c.url_spotify, "urls")
 
     def test_usuario_attributes(self):
         u = Usuario("name", ["pop", "rock"])

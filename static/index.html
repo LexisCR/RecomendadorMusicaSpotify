@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recomendador de Música</title>
+  <link rel="stylesheet" href="../static/estilos.css">
+</head>
+<body>
+  <h1>🎧 Recomendador de Música</h1>
+  <form id="formulario">
+    <label for="nombre">Tu nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label>Selecciona tus géneros favoritos:</label>
+    <label><input type="checkbox" name="generos" value="rock"> Rock</label>
+    <label><input type="checkbox" name="generos" value="pop"> Pop</label>
+    <label><input type="checkbox" name="generos" value="kpop"> K-Pop</label>
+
+    <button type="submit">Obtener Recomendaciones</button>
+  </form>
+
+  <h2>Resultados:</h2>
+  <ul id="resultados"></ul>
+
+  <script src="../static/script.js"></script>
+</body>
+</html>
